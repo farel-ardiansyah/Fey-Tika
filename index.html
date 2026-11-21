@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#4a6258" />
+  <meta name="description" content="Undangan pernikahan Ferry (Fey) &amp; Dewi Sartika Basir (Tika) - Ahad, 06 Desember 2026." />
+  <title>Undangan Pernikahan Fey &amp; Tika</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=DM+Sans:wght@400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="is-locked">
+
+  <canvas id="fairyCanvas" class="fairy-canvas" aria-hidden="true"></canvas>
+
+  <!-- COVER -->
+  <section class="cover" id="cover" aria-label="Sampul undangan">
+    <div class="cover-in">
+      <p class="kicker">The Wedding of</p>
+      <h1 class="names">
+        <span id="coverFirst">Fey</span><em>&amp;</em><span id="coverSecond">Tika</span>
+      </h1>
+      <p class="dear">Kepada Yth.</p>
+      <p class="guest" id="guestName">Teman-teman</p>
+      <p class="dear">di Tempat</p>
+      <button class="btn dark" id="openInvitation" type="button">
+        <svg viewBox="0 0 24 24" width="16" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
+        Buka Undangan
+      </button>
+    </div>
+  </section>
+
+  <!-- ISI UNDANGAN -->
+  <main id="invitation" class="invitation" aria-hidden="true">
+
+    <!-- Beranda: bingkai lengkung -->
+    <section class="sec hero trees" id="home" data-nav="home">
+      <div class="arch">
+        <p class="kicker dark">The Wedding of</p>
+        <h2 class="names dark">
+          <span id="heroFirst">Fey</span><em>&amp;</em><span id="heroSecond">Tika</span>
+        </h2>
+        <div class="arch-foot">
+          <hr />
+          <p class="hdate" id="heroDate">06 DESEMBER 2026</p>
+        </div>
+      </div>
+      <div class="bloom" aria-hidden="true"></div>
+    </section>
+
+    <!-- Foto oval + kutipan -->
+    <section class="sec sage" data-nav="home">
+      <h2 class="title-serif">Fey &amp; Tika</h2>
+      <div class="oval p-oval reveal" role="img" aria-label="Foto pasangan"></div>
+      <p class="quote">“Dan di antara tanda-tanda kebesaran-Nya ialah Dia menciptakan pasangan-pasangan untukmu agar kamu merasa tenteram kepadanya.”</p>
+      <p class="quote-src">QS. Ar-Rum: 21</p>
+    </section>
+
+    <!-- Mempelai -->
+    <section class="sec cream trees" id="couple" data-nav="couple">
+      <div class="section-heading reveal">
+        <h2 class="title-serif dark">Forever &amp; Always</h2>
+        <p class="sub">Dua hati menjadi satu dalam ikatan cinta yang abadi.</p>
+      </div>
+
+      <article class="person-card reveal">
+        <h3 class="script">Mempelai Pria</h3>
+        <div class="person-photo p-groom"></div>
+        <p class="person-name" id="groomFullName">Ferry</p>
+        <p class="person-desc" id="groomParents">Putra dari (Alm.) Bapak Memen &amp; Ibu Nenih Sunaenih</p>
+        <a class="social-link" id="groomSocial" href="https://instagram.com/kang_fey22" target="_blank" rel="noreferrer">@kang_fey22</a>
+      </article>
+
+      <article class="person-card reveal">
+        <h3 class="script">Mempelai Wanita</h3>
+        <div class="person-photo p-bride"></div>
+        <p class="person-name" id="brideFullName">Dewi Sartika Basir</p>
+        <p class="person-desc" id="brideParents">Putri dari Bapak C. Dg. Sewang &amp; Ibu Juniati</p>
+        <a class="social-link" id="brideSocial" href="https://instagram.com/dwsartika23" target="_blank" rel="noreferrer">@dwsartika23</a>
+      </article>
+    </section>
+
+    <!-- Hitung mundur -->
+    <section class="sec sage" data-nav="event">
+      <h2 class="script light">Menuju Hari Bahagia</h2>
+      <svg class="rose" viewBox="0 0 60 90" fill="none" stroke="#fff" stroke-width="1.5" aria-hidden="true"><path d="M30 8c-10 0-16 8-14 17 2 8 10 12 17 9 7-3 9-12 3-17-5-4-12-1-12 5 0 4 5 6 8 3"/><path d="M30 38c0 15-2 30-6 48"/><path d="M27 62c-8-6-14-4-18-9 8-1 14 1 18 9z"/><path d="M28 74c8-6 14-4 20-9-8-2-15 0-20 9z"/></svg>
+      <div class="countdown" aria-label="Hitung mundur acara">
+        <div><strong id="days">00</strong><span>Hari</span></div>
+        <div><strong id="hours">00</strong><span>Jam</span></div>
+        <div><strong id="minutes">00</strong><span>Menit</span></div>
+        <div><strong id="seconds">00</strong><span>Detik</span></div>
+      </div>
+      <div class="gazebo" aria-hidden="true"></div>
+      <div class="bloom" aria-hidden="true"></div>
+    </section>
+
+    <!-- Kalender -->
+    <section class="sec sage" data-nav="event">
+      <h2 class="script light">Save The Date</h2>
+      <p class="cal-month" id="calMonth">Desember</p>
+      <div class="cal-head"><span>M</span><span>S</span><span>S</span><span>R</span><span>K</span><span>J</span><span>S</span></div>
+      <div class="cal-grid" id="calGrid"></div>
+      <a class="btn light" id="calBtn" href="https://calendar.google.com" target="_blank" rel="noreferrer">Tambah ke Kalender</a>
+    </section>
+
+    <!-- Acara -->
+    <section class="sec cream trees" id="event" data-nav="event">
+      <h2 class="script">Detail Acara</h2>
+      <article class="event-card reveal">
+        <p class="script small">Acara Pernikahan</p>
+        <h3 id="eventDate">Ahad, 06 Desember 2026</h3>
+        <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 21s-7-6.2-7-11a7 7 0 0114 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>
+        <p class="event-address" id="eventAddress">Jl. Abd. Kadir Dg. Suro</p>
+        <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+        <p class="event-time" id="eventTime">Pukul 11.00 WITA – Selesai</p>
+        <a class="btn dark wide" id="eventMap" href="https://maps.app.goo.gl/Ta6cRN8S6Mw4n6nu6?g_st=iw" target="_blank" rel="noreferrer">LIHAT LOKASI</a>
+        <a class="btn light wide" id="eventCal" href="https://calendar.google.com" target="_blank" rel="noreferrer">TAMBAH KE KALENDER</a>
+        <svg class="rings" viewBox="0 0 100 70" fill="none" stroke="#6b6b66" stroke-width="1.6" aria-hidden="true"><ellipse cx="38" cy="38" rx="24" ry="22"/><ellipse cx="38" cy="38" rx="18" ry="16"/><ellipse cx="62" cy="32" rx="24" ry="22"/><ellipse cx="62" cy="32" rx="18" ry="16"/></svg>
+      </article>
+    </section>
+
+    <!-- Galeri -->
+    <section class="sec sage" id="gallery" data-nav="gallery">
+      <h2 class="script light">Galeri Kenangan</h2>
+      <div class="gal">
+        <button class="gallery-photo g1" type="button" aria-label="Foto 1">Foto 1</button>
+        <button class="gallery-photo g2" type="button" aria-label="Foto 2">Foto 2</button>
+        <button class="gallery-photo g3" type="button" aria-label="Foto 3">Foto 3</button>
+        <button class="gallery-photo g4" type="button" aria-label="Foto 4">Foto 4</button>
+      </div>
+    </section>
+
+    <!-- RSVP & ucapan -->
+    <section class="sec cream" id="rsvp" data-nav="rsvp">
+      <h2 class="script">Konfirmasi &amp; Ucapan</h2>
+      <p class="sub">Mohon konfirmasi kehadiran dan sampaikan doa terbaik Anda.</p>
+      <form class="rsvp-form" id="rsvpForm">
+        <label for="rsvpName">Nama</label>
+        <input id="rsvpName" name="name" type="text" placeholder="Masukkan nama Anda" required />
+        <label for="rsvpStatus">Konfirmasi kehadiran</label>
+        <select id="rsvpStatus" name="status" required>
+          <option value="">Pilih konfirmasi</option>
+          <option value="Hadir">Dengan senang hati hadir</option>
+          <option value="Tidak hadir">Mohon maaf, belum bisa hadir</option>
+        </select>
+        <label for="rsvpGuests">Jumlah tamu</label>
+        <select id="rsvpGuests" name="guests">
+          <option value="1">1 orang</option><option value="2">2 orang</option>
+          <option value="3">3 orang</option><option value="4">4 orang</option>
+        </select>
+        <label for="rsvpMessage">Ucapan dan doa</label>
+        <textarea id="rsvpMessage" name="message" rows="3" placeholder="Tuliskan doa terbaik Anda..."></textarea>
+        <button class="btn dark wide" type="submit">Kirim konfirmasi</button>
+        <p class="form-note" id="formNote">Konfirmasi dan ucapan Anda akan tampil pada daftar di bawah.</p>
+      </form>
+      <div class="wishes-list" id="wishesList">
+        <p class="empty-wishes">Belum ada ucapan. Jadilah yang pertama mengirimkan doa.</p>
+      </div>
+    </section>
+
+    <!-- Hadiah -->
+    <section class="sec gift" data-nav="rsvp">
+      <svg class="gift-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><rect x="3" y="8" width="18" height="4"/><path d="M5 12v9h14v-9M12 8v13M12 8c-2-4-6-4-6-1.5S10 8 12 8zm0 0c2-4 6-4 6-1.5S14 8 12 8z"/></svg>
+      <h2 class="script">Wedding Gift</h2>
+      <p class="sub">Kehadiran Anda adalah hadiah terbaik. Namun jika ingin memberikan tanda kasih, dapat melalui informasi berikut.</p>
+      <div class="bank-card reveal">
+        <span class="bank-name" id="bankName">BANK BCA</span>
+        <strong id="bankAccount">8260498925</strong>
+        <span id="bankHolder">Dewi Sartika Basir</span>
+        <button class="copy-button" id="copyAccount" type="button">Salin nomor rekening</button>
+      </div>
+    </section>
+
+    <!-- Penutup -->
+    <section class="sec sage closing" data-nav="rsvp">
+      <div class="round p-oval" aria-hidden="true"></div>
+      <p class="thanks">Terima kasih atas doa restu Anda</p>
+      <p class="closing-names"><span id="closingFirst">Fey</span> &amp; <span id="closingSecond">Tika</span></p>
+      <p class="made">Made with love ♥</p>
+    </section>
+
+    <!-- Navigasi bawah + musik -->
+    <div class="dock">
+      <nav class="mobile-nav" aria-label="Navigasi undangan">
+        <a href="#home" class="active" aria-label="Beranda"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 11l8-7 8 7v9h-5v-6H9v6H4z"/></svg></a>
+        <a href="#couple" aria-label="Mempelai"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="9" cy="8" r="3"/><path d="M3 20c0-4 3-6 6-6s6 2 6 6"/><circle cx="17" cy="9" r="2.4"/><path d="M16 14c3 0 5 2 5 5"/></svg></a>
+        <a href="#event" aria-label="Acara"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/></svg></a>
+        <a href="#gallery" aria-label="Galeri"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="4" y="4" width="16" height="16" rx="2"/><circle cx="9" cy="9" r="1.6"/><path d="M4 17l5-5 4 4 3-3 4 4"/></svg></a>
+        <a href="#rsvp" aria-label="Ucapan"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 5h16v11H9l-5 4z"/></svg></a>
+      </nav>
+      <button class="icon-button music-button" id="musicToggle" type="button" aria-label="Putar musik" title="Putar musik">♫</button>
+    </div>
+
+  </main>
+
+  <!-- Lightbox galeri -->
+  <div class="lightbox" id="lightbox" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Pratinjau foto">
+    <button class="lightbox-close" id="closeLightbox" type="button" aria-label="Tutup">×</button>
+    <div class="lightbox-content" id="lightboxContent">Foto galeri</div>
+  </div>
+
+  <audio id="backgroundMusic" loop preload="none">
+    <source src="assets/sound.mp3" type="audio/mpeg" />
+  </audio>
+
+  <script src="script.js"></script>
+</body>
+</html>
