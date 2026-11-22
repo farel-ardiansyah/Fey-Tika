@@ -1,244 +1,302 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#4a6258" />
-  <meta name="description" content="Undangan pernikahan Ferry (Fey) &amp; Dewi Sartika Basir (Tika) - Ahad, 06 Desember 2026." />
-  <title>Undangan Pernikahan Fey &amp; Tika</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=DM+Sans:wght@400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css" />
-</head>
-<body class="is-locked">
+/* =====================================================
+   FAIRY GARDEN - tampilan mobile ala undangan digital
+   FOTO PREWEDDING (folder assets/):
+   Sampul        -> prewed-4.jpeg
+   Foto oval     -> prewed-1.jpeg
+   Mempelai pria -> prewed-7.jpeg   | wanita -> prewed-8.jpeg
+   Penutup       -> prewed-3.jpeg
+   Galeri        -> semua foto + video, atur di index.html
+===================================================== */
 
-  <canvas id="fairyCanvas" class="fairy-canvas" aria-hidden="true"></canvas>
+:root {
+  --sage: #566f65;
+  --sage-d: #4a6258;
+  --cream: #f7f5ec;
+  --ink: #3f5248;
+  --serif: 'Playfair Display', Georgia, serif;
+  --script: 'Dancing Script', cursive;
+  --body: 'DM Sans', system-ui, sans-serif;
 
-  <!-- COVER -->
-  <section class="cover" id="cover" aria-label="Sampul undangan">
-    <div class="cover-in">
-      <p class="kicker">The Wedding of</p>
-      <h1 class="names">
-        <span id="coverFirst">Fey</span><em>&amp;</em><span id="coverSecond">Tika</span>
-      </h1>
-      <p class="dear">Kepada Yth.</p>
-      <p class="guest" id="guestName">Teman-teman</p>
-      <p class="dear">di Tempat</p>
-      <button class="btn dark" id="openInvitation" type="button">
-        <svg viewBox="0 0 24 24" width="16" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
-        Buka Undangan
-      </button>
-    </div>
-  </section>
+  /* Pegunungan, pohon & gazebo (SVG ringan, tanpa file tambahan) */
+  --mtn: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300' preserveAspectRatio='xMidYMax slice'%3E%3Cpolygon fill='rgba(255,255,255,.10)' points='0,300 0,190 80,120 140,170 220,60 300,160 360,110 400,150 400,300'/%3E%3Cpolygon fill='rgba(255,255,255,.22)' points='195,86 220,60 246,88 232,80 220,93 208,80'/%3E%3Cpolygon fill='rgba(0,0,0,.12)' points='0,300 0,230 70,190 150,240 230,170 320,235 400,200 400,300'/%3E%3C/svg%3E");
+  --tree: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 200'%3E%3Cg fill='none' stroke='rgba(70,95,85,.6)' stroke-width='3' stroke-linecap='round'%3E%3Cpath d='M60 0 C58 40 62 90 55 130'/%3E%3Cpath d='M58 50 C40 70 25 72 10 90'/%3E%3Cpath d='M57 80 C75 95 90 98 110 120'/%3E%3Cpath d='M55 110 C45 130 35 135 25 155'/%3E%3Cpath d='M60 70 C70 85 78 90 85 105'/%3E%3C/g%3E%3Cg fill='rgba(70,95,85,.35)'%3E%3Ccircle cx='10' cy='92' r='9'/%3E%3Ccircle cx='110' cy='122' r='9'/%3E%3Ccircle cx='25' cy='157' r='8'/%3E%3Ccircle cx='86' cy='107' r='7'/%3E%3C/g%3E%3C/svg%3E");
+  --gaz: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 220'%3E%3Cg fill='%23e6ebe7'%3E%3Cpath d='M30 80 Q100 -10 170 80Z'/%3E%3Crect x='98' y='8' width='4' height='16'/%3E%3Ccircle cx='100' cy='8' r='4'/%3E%3Crect x='24' y='80' width='152' height='8'/%3E%3C/g%3E%3Cg fill='%23d9e0db'%3E%3Crect x='34' y='88' width='8' height='80'/%3E%3Crect x='56' y='88' width='8' height='80'/%3E%3Crect x='78' y='88' width='8' height='80'/%3E%3Crect x='114' y='88' width='8' height='80'/%3E%3Crect x='136' y='88' width='8' height='80'/%3E%3Crect x='158' y='88' width='8' height='80'/%3E%3C/g%3E%3Cg fill='%23e6ebe7'%3E%3Crect x='24' y='168' width='152' height='8'/%3E%3Crect x='14' y='176' width='172' height='8'/%3E%3Crect x='4' y='184' width='192' height='8'/%3E%3C/g%3E%3C/svg%3E");
+}
 
-  <!-- ISI UNDANGAN -->
-  <main id="invitation" class="invitation" aria-hidden="true">
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: var(--body); background: #262626; color: var(--ink); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+body.is-locked { overflow: hidden; }
+button { font-family: inherit; }
 
-    <!-- Beranda: bingkai lengkung -->
-    <section class="sec hero trees" id="home" data-nav="home">
-      <div class="arch">
-        <p class="kicker dark">The Wedding of</p>
-        <h2 class="names dark">
-          <span id="heroFirst">Fey</span><em>&amp;</em><span id="heroSecond">Tika</span>
-        </h2>
-        <div class="arch-foot">
-          <hr />
-          <p class="hdate" id="heroDate">06 DESEMBER 2026</p>
-        </div>
-      </div>
-      <div class="bloom" aria-hidden="true"></div>
-    </section>
+/* ---------- Kerangka & cover ---------- */
+.invitation { display: none; max-width: 480px; margin: 0 auto; background: var(--cream); overflow: hidden; }
+.invitation.show { display: block; animation: fadeIn 1s ease; }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-    <!-- Foto oval + kutipan -->
-    <section class="sec sage" data-nav="home">
-      <h2 class="title-serif">Fey &amp; Tika</h2>
-      <div class="oval p-oval reveal" role="img" aria-label="Foto pasangan"></div>
-      <p class="quote">“Dan di antara tanda-tanda kebesaran-Nya ialah Dia menciptakan pasangan-pasangan untukmu agar kamu merasa tenteram kepadanya.”</p>
-      <p class="quote-src">QS. Ar-Rum: 21</p>
-    </section>
+.cover {
+  position: fixed; inset: 0; margin: 0 auto; max-width: 480px; z-index: 1000;
+  display: flex; align-items: center; justify-content: center; text-align: center; color: #fff;
+  background:
+    linear-gradient(180deg, rgba(20,30,25,.32) 0%, rgba(20,30,25,.55) 45%, rgba(15,22,18,.82) 100%),
+    url("assets/prewed-4.jpeg") 50% 12% / cover no-repeat,
+    linear-gradient(160deg, #4a6258, #26332d);
+  transition: opacity .9s ease, transform .9s ease, visibility .9s;
+}
+.cover.hide { opacity: 0; visibility: hidden; transform: scale(1.04); pointer-events: none; }
+.cover-in { padding: 24px; display: flex; flex-direction: column; align-items: center; }
 
-    <!-- Mempelai -->
-    <section class="sec cream trees" id="couple" data-nav="couple">
-      <div class="section-heading reveal">
-        <h2 class="title-serif dark">Forever &amp; Always</h2>
-        <p class="sub">Dua hati menjadi satu dalam ikatan cinta yang abadi.</p>
-      </div>
+.kicker { font-size: 11px; letter-spacing: .38em; text-transform: uppercase; margin-bottom: 14px; }
+.kicker.dark { color: #5f7268; }
+.names { font-family: var(--serif); font-weight: 400; font-size: clamp(46px, 14vw, 64px); line-height: 1.12; display: flex; flex-direction: column; align-items: center; }
+.names em { font-size: .5em; font-style: italic; margin: 2px 0; }
+.names.dark { color: var(--sage-d); font-weight: 600; }
+.dear { font-family: var(--serif); font-size: 13px; }
+.guest { font-family: var(--serif); font-weight: 600; font-size: 19px; margin: 4px 0; }
+.cover .names { margin-bottom: 52px; }
+.cover .btn { margin-top: 22px; }
 
-      <article class="person-card reveal">
-        <h3 class="script">Mempelai Pria</h3>
-        <div class="person-photo p-groom"></div>
-        <p class="person-name" id="groomFullName">Ferry</p>
-        <p class="person-desc" id="groomParents">Putra dari (Alm.) Bapak Memen &amp; Ibu Nenih Sunaenih</p>
-        <a class="social-link" id="groomSocial" href="https://instagram.com/kang_fey22" target="_blank" rel="noreferrer">@kang_fey22</a>
-      </article>
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  border: 1px solid transparent; border-radius: 10px; padding: 10px 20px;
+  font-size: 13px; font-weight: 600; text-decoration: none; cursor: pointer; transition: transform .2s, opacity .2s;
+}
+.btn:hover { transform: translateY(-1px); opacity: .92; }
+.btn.dark { background: #4a4a3e; color: #fff; }
+.btn.light { background: #fff; color: var(--ink); border-color: #6d7a72; }
+.btn.wide { width: 100%; margin-top: 12px; letter-spacing: .06em; font-size: 11px; }
 
-      <article class="person-card reveal">
-        <h3 class="script">Mempelai Wanita</h3>
-        <div class="person-photo p-bride"></div>
-        <p class="person-name" id="brideFullName">Dewi Sartika Basir</p>
-        <p class="person-desc" id="brideParents">Putri dari Bapak C. Dg. Sewang &amp; Ibu Juniati</p>
-        <a class="social-link" id="brideSocial" href="https://instagram.com/dwsartika23" target="_blank" rel="noreferrer">@dwsartika23</a>
-      </article>
-    </section>
+/* ---------- Seksi ---------- */
+.sec { position: relative; padding: 64px 24px 110px; text-align: center; overflow: hidden; }
+.sec > * { position: relative; z-index: 2; }
+.sage { color: #fff; background: url("assets/bg-sage.jpg") center/cover no-repeat, var(--mtn) center bottom/cover no-repeat, linear-gradient(#5d776d, #4a6258); }
+.cream { background: url("assets/bg-cream.jpg") center/cover no-repeat, var(--cream); }
+.trees::before, .trees::after {
+  content: ""; position: absolute; top: 0; width: 120px; height: 200px; z-index: 1;
+  background: var(--tree) no-repeat top / contain;
+}
+.trees::before { left: 0; }
+.trees::after { right: 0; transform: scaleX(-1); }
 
-    <!-- Hitung mundur -->
-    <section class="sec sage" data-nav="event">
-      <h2 class="script light">Menuju Hari Bahagia</h2>
-      <svg class="rose" viewBox="0 0 60 90" fill="none" stroke="#fff" stroke-width="1.5" aria-hidden="true"><path d="M30 8c-10 0-16 8-14 17 2 8 10 12 17 9 7-3 9-12 3-17-5-4-12-1-12 5 0 4 5 6 8 3"/><path d="M30 38c0 15-2 30-6 48"/><path d="M27 62c-8-6-14-4-18-9 8-1 14 1 18 9z"/><path d="M28 74c8-6 14-4 20-9-8-2-15 0-20 9z"/></svg>
-      <div class="countdown" aria-label="Hitung mundur acara">
-        <div><strong id="days">00</strong><span>Hari</span></div>
-        <div><strong id="hours">00</strong><span>Jam</span></div>
-        <div><strong id="minutes">00</strong><span>Menit</span></div>
-        <div><strong id="seconds">00</strong><span>Detik</span></div>
-      </div>
-      <div class="gazebo" aria-hidden="true"></div>
-      <div class="bloom" aria-hidden="true"></div>
-    </section>
+.title-serif { font-family: var(--serif); font-weight: 600; font-size: 28px; margin-bottom: 28px; }
+.title-serif.dark { color: var(--ink); margin-bottom: 14px; }
+.script { font-family: var(--script); font-weight: 700; font-size: 34px; color: var(--ink); margin-bottom: 8px; }
+.script.light { color: #fff; }
+.script.small { font-size: 30px; }
+.sub { font-size: 14px; max-width: 320px; margin: 0 auto 8px; color: #5b6b62; }
 
-    <!-- Kalender -->
-    <section class="sec sage" data-nav="event">
-      <h2 class="script light">Save The Date</h2>
-      <p class="cal-month" id="calMonth">Desember</p>
-      <div class="cal-head"><span>M</span><span>S</span><span>S</span><span>R</span><span>K</span><span>J</span><span>S</span></div>
-      <div class="cal-grid" id="calGrid"></div>
-      <a class="btn light" id="calBtn" href="https://calendar.google.com" target="_blank" rel="noreferrer">Tambah ke Kalender</a>
-    </section>
+/* ---------- Beranda (bingkai lengkung) ---------- */
+.hero { min-height: 100svh; display: flex; align-items: center; justify-content: center; padding-bottom: calc(min(100vw, 480px) / 2.6 + 10px); background: url("assets/bg-hero.jpg") center/cover no-repeat, var(--mtn) center bottom/cover no-repeat, linear-gradient(#c9d1ca, #e8ebe5); }
+.arch {
+  width: 80%; max-width: 330px; min-height: 60svh; padding: 90px 18px 34px;
+  border: 5px solid #51695f; border-radius: 999px 999px 0 0; background: rgba(255,255,255,.55);
+  display: flex; flex-direction: column; align-items: center; justify-content: space-between;
+}
+.arch-foot { width: 100%; }
+.arch hr { border: 0; border-top: 1px solid #aab5ae; margin-bottom: 14px; }
+.hdate { font-size: 11px; font-weight: 600; letter-spacing: .3em; color: #5f7268; }
 
-    <!-- Acara -->
-    <section class="sec cream trees" id="event" data-nav="event">
-      <h2 class="script">Detail Acara</h2>
-      <article class="event-card reveal">
-        <p class="script small">Acara Pernikahan</p>
-        <h3 id="eventDate">Ahad, 06 Desember 2026</h3>
-        <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 21s-7-6.2-7-11a7 7 0 0114 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>
-        <p class="event-address" id="eventAddress">Jl. Abd. Kadir Dg. Suro</p>
-        <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
-        <p class="event-time" id="eventTime">Pukul 11.00 WITA – Selesai</p>
-        <a class="btn dark wide" id="eventMap" href="https://maps.app.goo.gl/Ta6cRN8S6Mw4n6nu6?g_st=iw" target="_blank" rel="noreferrer">LIHAT LOKASI</a>
-        <a class="btn light wide" id="eventCal" href="https://calendar.google.com" target="_blank" rel="noreferrer">TAMBAH KE KALENDER</a>
-        <svg class="rings" viewBox="0 0 100 70" fill="none" stroke="#6b6b66" stroke-width="1.6" aria-hidden="true"><ellipse cx="38" cy="38" rx="24" ry="22"/><ellipse cx="38" cy="38" rx="18" ry="16"/><ellipse cx="62" cy="32" rx="24" ry="22"/><ellipse cx="62" cy="32" rx="18" ry="16"/></svg>
-      </article>
-    </section>
+.bloom { position: absolute; left: 0; right: 0; bottom: 0; aspect-ratio: 1600 / 612; z-index: 3 !important; pointer-events: none; }
+.bloom::before { content: ""; position: absolute; inset: 0; bottom: -8px; background: url("assets/rose.png") center bottom / 100% 100% no-repeat; }
 
-    <!-- Galeri -->
-    <section class="sec sage" id="gallery" data-nav="gallery">
-      <h2 class="script light">Galeri Kenangan</h2>
-      <p class="sub gal-sub">Potret perjalanan cinta kami. Ketuk foto untuk memperbesar.</p>
-      <div class="gal" id="galleryGrid">
-        <button class="gallery-photo wide" type="button" data-type="image" data-src="assets/prewed-3.jpeg" aria-label="Buka foto 1">
-          <img src="assets/prewed-3.jpeg" alt="Fey dan Tika berpelukan, foto prewedding" loading="lazy" decoding="async" style="--pos:50% 22%" />
-        </button>
-        <button class="gallery-photo " type="button" data-type="image" data-src="assets/prewed-1.jpeg" aria-label="Buka foto 2">
-          <img src="assets/prewed-1.jpeg" alt="Fey dan Tika dengan bunga putih, foto prewedding" loading="lazy" decoding="async" style="--pos:50% 30%" />
-        </button>
-        <button class="gallery-photo " type="button" data-type="image" data-src="assets/prewed-2.jpeg" aria-label="Buka foto 3">
-          <img src="assets/prewed-2.jpeg" alt="Fey dan Tika berpose anggun, foto prewedding" loading="lazy" decoding="async" style="--pos:50% 25%" />
-        </button>
-        <button class="gallery-photo tall" type="button" data-type="image" data-src="assets/prewed-9.jpeg" aria-label="Buka foto 4">
-          <img src="assets/prewed-9.jpeg" alt="Fey dan Tika di depan dekorasi bunga biru dan putih" loading="lazy" decoding="async" style="--pos:56% 35%" />
-        </button>
-        <button class="gallery-photo sq" type="button" data-type="image" data-src="assets/prewed-5.jpeg" aria-label="Buka foto 5">
-          <img src="assets/prewed-5.jpeg" alt="Miniatur Fey dan Tika di dalam kotak kaca" loading="lazy" decoding="async" style="--pos:50% 38%" />
-        </button>
-        <button class="gallery-photo sq" type="button" data-type="image" data-src="assets/prewed-6.jpeg" aria-label="Buka foto 6">
-          <img src="assets/prewed-6.jpeg" alt="Miniatur pasangan di tangan, bertuliskan My Partner" loading="lazy" decoding="async" style="--pos:50% 62%" />
-        </button>
-        <button class="gallery-photo " type="button" data-type="image" data-src="assets/prewed-7.jpeg" aria-label="Buka foto 7">
-          <img src="assets/prewed-7.jpeg" alt="Potret Fey dengan busana hitam" loading="lazy" decoding="async" style="--pos:50% 20%" />
-        </button>
-        <button class="gallery-photo" type="button" data-type="image" data-src="assets/prewed-8.jpeg" aria-label="Buka foto 8">
-          <img src="assets/prewed-8.jpeg" alt="Potret Tika dengan mahkota emas" loading="lazy" decoding="async" style="--pos:50% 0%" />
-        </button>
-        <button class="gallery-photo " type="button" data-type="image" data-src="assets/prewed-4.jpeg" aria-label="Buka foto 9">
-          <img src="assets/prewed-4.jpeg" alt="Tika dan Fey berpelukan dengan busana adat" loading="lazy" decoding="async" style="--pos:50% 25%" />
-        </button>
-        <button class="gallery-photo is-video" type="button" data-type="video" data-src="assets/prewed-10.mp4" data-poster="assets/prewed-10-poster.jpg" aria-label="Putar video prewedding">
-          <img src="assets/prewed-10-poster.jpg" alt="Cuplikan video prewedding Fey dan Tika" loading="lazy" decoding="async" style="--pos:50% 30%" />
-          <span class="play-badge" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M8 5.5v13a1 1 0 001.5.86l10.5-6.5a1 1 0 000-1.72L9.5 4.64A1 1 0 008 5.5z"/></svg></span>
-          <span class="video-tag" aria-hidden="true">Video</span>
-        </button>
-      </div>
-    </section>
+/* ---------- GAMBAR LATAR (opsional) ----------
+   Simpan di folder assets/ dengan nama:
+   bg-hero.jpg  -> beranda (bingkai lengkung)
+   bg-sage.jpg  -> bagian hijau (oval, hitung mundur, kalender, galeri, penutup)
+   bg-cream.jpg -> bagian krem (mempelai, acara)
+   Jika file tidak ada, latar sederhana bawaan tetap dipakai. */
 
-    <!-- RSVP & ucapan -->
-    <section class="sec cream" id="rsvp" data-nav="rsvp">
-      <h2 class="script">Konfirmasi &amp; Ucapan</h2>
-      <p class="sub">Mohon konfirmasi kehadiran dan sampaikan doa terbaik Anda.</p>
-      <form class="rsvp-form" id="rsvpForm">
-        <label for="rsvpName">Nama</label>
-        <input id="rsvpName" name="name" type="text" placeholder="Masukkan nama Anda" required />
-        <label for="rsvpStatus">Konfirmasi kehadiran</label>
-        <select id="rsvpStatus" name="status" required>
-          <option value="">Pilih konfirmasi</option>
-          <option value="Hadir">Dengan senang hati hadir</option>
-          <option value="Tidak hadir">Mohon maaf, belum bisa hadir</option>
-        </select>
-        <label for="rsvpGuests">Jumlah tamu</label>
-        <select id="rsvpGuests" name="guests">
-          <option value="1">1 orang</option><option value="2">2 orang</option>
-          <option value="3">3 orang</option><option value="4">4 orang</option>
-        </select>
-        <label for="rsvpMessage">Ucapan dan doa</label>
-        <textarea id="rsvpMessage" name="message" rows="3" placeholder="Tuliskan doa terbaik Anda..."></textarea>
-        <button class="btn dark wide" type="submit">Kirim konfirmasi</button>
-        <p class="form-note" id="formNote">Konfirmasi dan ucapan Anda akan tampil pada daftar di bawah.</p>
-      </form>
-      <div class="wishes-list" id="wishesList">
-        <p class="empty-wishes">Belum ada ucapan. Jadilah yang pertama mengirimkan doa.</p>
-      </div>
-    </section>
+/* ---------- Foto ---------- */
+.p-oval { background: url("assets/prewed-1.jpeg") 50% 35% / cover no-repeat, linear-gradient(160deg, #9db3a7, #6f8a7e); }
+.p-groom { background: url("assets/prewed-7.jpeg") 50% 12% / cover no-repeat, linear-gradient(160deg, #b5c4ba, #86a091); }
+.p-bride { background: url("assets/prewed-8.jpeg") 50% 6% / cover no-repeat, linear-gradient(160deg, #c8d3c9, #98ae9f); }
+.p-round { background: url("assets/prewed-3.jpeg") 42% 22% / cover no-repeat, linear-gradient(160deg, #9db3a7, #6f8a7e); }
 
-    <!-- Hadiah -->
-    <section class="sec gift" data-nav="rsvp">
-      <svg class="gift-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><rect x="3" y="8" width="18" height="4"/><path d="M5 12v9h14v-9M12 8v13M12 8c-2-4-6-4-6-1.5S10 8 12 8zm0 0c2-4 6-4 6-1.5S14 8 12 8z"/></svg>
-      <h2 class="script">Wedding Gift</h2>
-      <p class="sub">Kehadiran Anda adalah hadiah terbaik. Namun jika ingin memberikan tanda kasih, dapat melalui informasi berikut.</p>
-      <div class="bank-card reveal">
-        <span class="bank-name" id="bankName">BANK BCA</span>
-        <strong id="bankAccount">8260498925</strong>
-        <span id="bankHolder">Dewi Sartika Basir</span>
-        <button class="copy-button" id="copyAccount" type="button">Salin nomor rekening</button>
-      </div>
-    </section>
+.oval { width: 62%; max-width: 250px; aspect-ratio: 3 / 4; margin: 0 auto 28px; border: 4px solid #fff; border-radius: 999px; box-shadow: 0 10px 30px rgba(0,0,0,.2); }
+.quote { font-size: 14px; max-width: 320px; margin: 0 auto 6px; }
+.quote-src { font-size: 12px; letter-spacing: .15em; opacity: .85; }
 
-    <!-- Penutup -->
-    <section class="sec sage closing" data-nav="rsvp">
-      <div class="round p-round" role="img" aria-label="Foto Fey dan Tika"></div>
-      <p class="thanks">Terima kasih atas doa restu Anda</p>
-      <p class="closing-names"><span id="closingFirst">Fey</span> &amp; <span id="closingSecond">Tika</span></p>
-      <p class="made">Made with love ♥</p>
-    </section>
+/* ---------- Mempelai ---------- */
+.person-card { margin-top: 44px; }
+.person-photo { position: relative; width: 62%; max-width: 230px; aspect-ratio: 3 / 4; margin: 14px auto 26px; border-radius: 50%; border: 4px solid #fff; box-shadow: 0 12px 30px rgba(50,70,60,.28); }
+.person-photo::before, .person-photo::after { position: absolute; font-size: 36px; letter-spacing: -8px; color: #fff; text-shadow: 0 1px 5px rgba(50,90,65,.75); }
+.person-photo::before { content: "❀✿"; right: -14px; top: -8px; }
+.person-photo::after { content: "✿❀"; left: -14px; bottom: -6px; }
+.person-name { font-family: var(--serif); font-weight: 600; font-size: 26px; color: var(--ink); line-height: 1.25; }
+.person-desc { font-size: 13px; color: #5b6b62; max-width: 280px; margin: 8px auto 16px; }
+.social-link { display: inline-block; background: #4a5d54; color: #fff; border-radius: 999px; padding: 8px 20px; font-size: 13px; font-weight: 500; text-decoration: none; }
+.social-link[hidden] { display: none; }
 
-    <!-- Navigasi bawah + musik -->
-    <div class="dock">
-      <nav class="mobile-nav" aria-label="Navigasi undangan">
-        <a href="#home" class="active" aria-label="Beranda"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 11l8-7 8 7v9h-5v-6H9v6H4z"/></svg></a>
-        <a href="#couple" aria-label="Mempelai"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="9" cy="8" r="3"/><path d="M3 20c0-4 3-6 6-6s6 2 6 6"/><circle cx="17" cy="9" r="2.4"/><path d="M16 14c3 0 5 2 5 5"/></svg></a>
-        <a href="#event" aria-label="Acara"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/></svg></a>
-        <a href="#gallery" aria-label="Galeri"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="4" y="4" width="16" height="16" rx="2"/><circle cx="9" cy="9" r="1.6"/><path d="M4 17l5-5 4 4 3-3 4 4"/></svg></a>
-        <a href="#rsvp" aria-label="Ucapan"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 5h16v11H9l-5 4z"/></svg></a>
-      </nav>
-      <button class="icon-button music-button" id="musicToggle" type="button" aria-label="Putar musik" title="Putar musik">♫</button>
-    </div>
+/* ---------- Hitung mundur ---------- */
+.rose { width: 56px; margin: 6px auto 26px; display: block; }
+.countdown { display: flex; justify-content: center; gap: 12px; }
+.countdown div { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+.countdown strong { display: block; min-width: 54px; padding: 10px 0; background: #fff; color: var(--ink); border-radius: 10px; font-family: var(--serif); font-size: 24px; line-height: 1.2; }
+.countdown span { font-family: var(--serif); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; }
+.gazebo { width: min(78%, 300px); aspect-ratio: 487 / 466; margin: 44px auto 60px; background: url("assets/gazebo.png") center bottom / contain no-repeat; }
 
-  </main>
+/* ---------- Kalender ---------- */
+.cal-month { display: inline-block; margin: 22px 0 26px; padding: 8px 44px; border: 1px solid rgba(255,255,255,.7); border-radius: 50%; font-family: var(--script); font-size: 22px; }
+.cal-head, .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); max-width: 340px; margin: 0 auto; font-family: var(--serif); }
+.cal-head span { font-size: 12px; font-weight: 600; padding-bottom: 10px; }
+.cal-grid span { position: relative; isolation: isolate; height: 42px; display: flex; align-items: center; justify-content: center; font-size: 17px; }
+.cal-grid .hl { color: var(--ink); font-weight: 700; }
+.cal-grid .hl::before { content: "♥"; position: absolute; z-index: -1; font-size: 54px; line-height: 1; color: #fff; }
+.sec .btn.light { margin-top: 30px; }
 
-  <!-- Lightbox galeri -->
-  <div class="lightbox" id="lightbox" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Pratinjau foto">
-    <div class="lightbox-frame">
-      <button class="lightbox-close" id="closeLightbox" type="button" aria-label="Tutup">×</button>
-      <button class="lightbox-nav prev" id="lightboxPrev" type="button" aria-label="Foto sebelumnya">‹</button>
-      <div class="lightbox-content" id="lightboxContent"></div>
-      <button class="lightbox-nav next" id="lightboxNext" type="button" aria-label="Foto berikutnya">›</button>
-      <div class="lightbox-count" id="lightboxCount" aria-live="polite"></div>
-    </div>
-  </div>
+/* ---------- Acara ---------- */
+.event-card { max-width: 340px; margin: 26px auto 0; padding: 30px 20px 26px; border: 1.5px solid #51635a; border-radius: 6px; background: rgba(255,255,255,.45); }
+.event-card h3 { font-family: var(--serif); font-size: 14px; letter-spacing: .14em; text-transform: uppercase; padding: 14px 0; margin: 10px 0 18px; border-top: 1px solid #d0d6d1; border-bottom: 1px solid #d0d6d1; }
+.ico { width: 18px; margin: 0 auto 6px; display: block; color: #6b7a72; }
+.event-address { font-family: var(--serif); font-style: italic; font-size: 14px; margin-bottom: 18px; }
+.event-time { font-family: var(--serif); font-weight: 600; font-size: 14px; letter-spacing: .1em; margin-bottom: 8px; }
+.rings { width: 80px; margin: 26px auto 0; display: block; }
 
-  <audio id="backgroundMusic" loop preload="none">
-    <source src="assets/sound.mp3" type="audio/mpeg" />
-  </audio>
+/* ---------- Galeri (mosaik editorial) ---------- */
+.gal-sub { margin-bottom: 0; }
+.gal { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; max-width: 432px; margin: 26px auto 0; }
+.gallery-photo {
+  position: relative; display: block; width: 100%; padding: 0; overflow: hidden;
+  aspect-ratio: 3 / 4; border: 3px solid #fff; border-radius: 14px;
+  background: #cdd8d0; box-shadow: 0 10px 24px rgba(30,50,40,.22);
+  color: transparent; font-size: 0; cursor: pointer; -webkit-tap-highlight-color: transparent;
+}
+.gallery-photo img {
+  position: absolute; inset: 0; width: 100%; height: 100%; display: block;
+  object-fit: cover; object-position: var(--pos, 50% 30%);
+  transition: transform .8s cubic-bezier(.2,.7,.2,1);
+}
+.gallery-photo::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 60%, rgba(20,35,28,.22)); pointer-events: none; }
+.gallery-photo:hover img, .gallery-photo:focus-visible img { transform: scale(1.06); }
+.gallery-photo:focus-visible { outline: 3px solid #2b4034; outline-offset: 2px; }
+.gallery-photo.wide { grid-column: 1 / -1; aspect-ratio: 4 / 5; }
+.gallery-photo.tall { grid-row: span 2; aspect-ratio: auto; }
+.gallery-photo.sq { aspect-ratio: 1 / 1; }
+.gal .gallery-photo:nth-child(even) { transition-delay: .12s; }
 
-  <script src="script.js"></script>
-</body>
-</html>
+.play-badge {
+  position: absolute; z-index: 2; top: 50%; left: 50%; width: 54px; height: 54px; transform: translate(-50%, -50%);
+  display: flex; align-items: center; justify-content: center; padding-left: 3px;
+  color: #2b4034; background: rgba(255,255,255,.92); border-radius: 50%;
+  box-shadow: 0 6px 18px rgba(0,0,0,.28); font-size: 0;
+}
+.video-tag {
+  position: absolute; z-index: 2; left: 10px; bottom: 10px; padding: 3px 10px;
+  font: 600 10px var(--body); letter-spacing: .14em; text-transform: uppercase;
+  color: #fff; background: rgba(43,64,52,.78); border-radius: 999px;
+}
+
+
+/* ---------- Hadiah ---------- */
+.gift { background: linear-gradient(rgba(247,245,236,.85), rgba(247,245,236,.9)), var(--gaz) center bottom / 80% no-repeat, var(--cream); }
+.gift-ico { width: 34px; margin: 0 auto 6px; display: block; color: var(--ink); }
+.bank-card { position: relative; max-width: 340px; margin: 26px auto 0; padding: 16px 110px 16px 18px; background: #fff; border-radius: 12px; box-shadow: 0 2px 12px rgba(0,0,0,.07); text-align: left; }
+.bank-card span { display: block; font-size: 12px; color: #6b7a72; }
+.bank-name { font-family: var(--serif); letter-spacing: .08em; }
+.bank-card strong { display: block; margin: 4px 0; font: 700 20px ui-monospace, Menlo, Consolas, monospace; letter-spacing: .03em; }
+.copy-button { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); max-width: 96px; padding: 8px 10px; border: 0; border-radius: 999px; background: #eef1ee; color: var(--ink); font-size: 11px; font-weight: 600; line-height: 1.25; cursor: pointer; }
+.copy-button.copied { background: #4a5d54; color: #fff; }
+
+/* ---------- Penutup ---------- */
+.closing { padding-bottom: 150px; }
+.round { width: 132px; height: 132px; margin: 0 auto 30px; border-radius: 50%; border: 4px solid #fff; box-shadow: 0 10px 26px rgba(30,50,40,.28); }
+.thanks { font-family: var(--serif); font-style: italic; font-size: 14px; }
+.closing-names { font-family: var(--serif); font-style: italic; font-size: 38px; margin: 18px 0 34px; }
+.made { font-size: 12px; letter-spacing: .12em; opacity: .85; }
+
+/* ---------- Navigasi bawah & musik ---------- */
+.dock { position: fixed; left: 0; right: 0; bottom: 18px; max-width: 480px; margin: 0 auto; z-index: 100; display: flex; justify-content: center; align-items: center; gap: 10px; pointer-events: none; }
+.mobile-nav, .icon-button { pointer-events: auto; background: rgba(78,84,70,.93); backdrop-filter: blur(6px); box-shadow: 0 6px 18px rgba(0,0,0,.25); }
+.mobile-nav { display: flex; gap: 2px; padding: 7px 12px; border-radius: 999px; }
+.mobile-nav a { position: relative; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,.65); border-radius: 50%; }
+.mobile-nav a svg { width: 18px; height: 18px; }
+.mobile-nav a.active { color: #fff; }
+.mobile-nav a.active::after { content: ""; position: absolute; bottom: -2px; width: 4px; height: 4px; border-radius: 50%; background: #fff; }
+.icon-button { width: 46px; height: 46px; border: 0; border-radius: 50%; color: #fff; font-size: 18px; cursor: pointer; }
+.icon-button.playing { animation: pulse 2.4s ease-in-out infinite; }
+@keyframes pulse { 50% { transform: scale(1.08); } }
+
+/* ---------- Animasi masuk ---------- */
+.reveal { opacity: 0; transform: translateY(24px); transition: opacity .8s ease, transform .8s ease; }
+.reveal.active { opacity: 1; transform: none; }
+
+/* ---------- Lightbox ---------- */
+.lightbox { position: fixed; inset: 0; z-index: 2000; display: none; align-items: center; justify-content: center; background: rgba(10,15,12,.97); touch-action: pan-y; }
+.lightbox.open { display: flex; animation: fadeIn .3s ease; }
+.lightbox-frame { position: relative; width: min(100vw, 480px); height: 100%; display: flex; align-items: center; justify-content: center; }
+.lightbox-content { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; padding: 64px 14px 56px; }
+.lightbox-content img, .lightbox-content video { max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; border-radius: 10px; box-shadow: 0 16px 50px rgba(0,0,0,.5); background: #000; animation: lbIn .35s ease; }
+@keyframes lbIn { from { opacity: 0; transform: scale(.96); } to { opacity: 1; transform: none; } }
+.lightbox-close { position: absolute; top: 12px; right: 14px; z-index: 3; width: 42px; height: 42px; border: 0; border-radius: 50%; background: rgba(255,255,255,.14); color: #fff; font-size: 28px; line-height: 1; cursor: pointer; }
+.lightbox-nav { position: absolute; top: 50%; z-index: 3; width: 42px; height: 42px; margin-top: -21px; border: 0; border-radius: 50%; background: rgba(255,255,255,.16); color: #fff; font-size: 30px; line-height: 1; padding-bottom: 4px; cursor: pointer; backdrop-filter: blur(4px); }
+.lightbox-nav.prev { left: 8px; }
+.lightbox-nav.next { right: 8px; }
+.lightbox-close:hover, .lightbox-nav:hover { background: rgba(255,255,255,.28); }
+.lightbox-count { position: absolute; bottom: 20px; left: 0; right: 0; text-align: center; color: rgba(255,255,255,.8); font: 500 12px var(--body); letter-spacing: .2em; }
+
+/* ---------- ANIMASI BERANDA (muncul saat undangan dibuka) ---------- */
+.invitation.show .hero .arch {
+  animation: archRise 2.8s cubic-bezier(.22,.8,.2,1) .3s both;
+}
+.invitation.show .hero .kicker { animation: textIn 1.8s ease 2.2s both; }
+.invitation.show .hero .names span:first-child { animation: textIn 1.8s ease 3.0s both; }
+.invitation.show .hero .names em { animation: popIn 1.6s cubic-bezier(.3,1.6,.5,1) 4.0s both; }
+.invitation.show .hero .names span:last-child { animation: textIn 1.8s ease 4.6s both; }
+.invitation.show .hero .arch hr { animation: lineGrow 2s ease 5.6s both; }
+.invitation.show .hero .hdate { animation: textIn 1.8s ease 6.4s both; }
+
+.invitation.show .hero.trees::before { animation: treeIn 2.6s ease .5s both, swayL 10s ease-in-out 3.5s infinite; transform-origin: 50% 0; }
+.invitation.show .hero.trees::after { animation: treeInR 2.6s ease .5s both, swayR 10s ease-in-out 4s infinite; transform-origin: 50% 0; }
+
+.invitation.show .hero .bloom { animation: bloomUp 3s cubic-bezier(.22,.8,.2,1) 1.5s both; }
+.invitation.show .hero .bloom::before { animation: bob 6s ease-in-out 5s infinite; }
+
+
+
+@keyframes archRise {
+  from { opacity: 0; transform: translateY(70px) scale(.94); clip-path: inset(100% 0 0 0); }
+  to   { opacity: 1; transform: none; clip-path: inset(-10px -10px -10px -10px); }
+}
+@keyframes textIn { from { opacity: 0; transform: translateY(18px); filter: blur(4px); } to { opacity: 1; transform: none; filter: none; } }
+@keyframes popIn { from { opacity: 0; transform: scale(.2) rotate(-25deg); } to { opacity: 1; transform: none; } }
+@keyframes lineGrow { from { transform: scaleX(0); opacity: 0; } to { transform: scaleX(1); opacity: 1; } }
+@keyframes treeIn { from { opacity: 0; transform: translateY(-60px); } to { opacity: 1; transform: none; } }
+@keyframes treeInR { from { opacity: 0; transform: scaleX(-1) translateY(-60px); } to { opacity: 1; transform: scaleX(-1); } }
+@keyframes swayL { 0%,100% { transform: rotate(0deg); } 50% { transform: rotate(2.2deg); } }
+@keyframes swayR { 0%,100% { transform: scaleX(-1) rotate(0deg); } 50% { transform: scaleX(-1) rotate(2.2deg); } }
+@keyframes bloomUp { from { opacity: 0; transform: translateY(110px); } to { opacity: 1; transform: none; } }
+@keyframes bob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
+
+
+/* ---------- Animasi latar (kelopak & kunang-kunang) ---------- */
+.fairy-canvas { position: fixed; top: 0; bottom: 0; left: 50%; width: 100%; max-width: 480px; height: 100%; transform: translateX(-50%); z-index: 50; pointer-events: none; opacity: 0; transition: opacity 1.6s ease; }
+.fairy-canvas.active { opacity: 1; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .reveal { opacity: 1; transform: none; transition: none; }
+  .icon-button.playing { animation: none; }
+  .invitation.show .hero, .invitation.show .hero * , .invitation.show .hero::before, .invitation.show .hero::after { animation: none !important; }
+}
+
+/* ---------- Perbaikan keterbacaan tulisan di bagian sage ----------
+   Latar bg-sage.jpg terang di atas, jadi tulisan putih tidak kentara.
+   Tulisan diganti hijau tua dengan cahaya putih tipis di sekelilingnya. */
+.sage .title-serif,
+.sage .script.light,
+.sage .countdown span,
+.sage .cal-month,
+.sage .cal-head span,
+.sage .cal-grid span:not(.hl),
+.sage .quote,
+.sage .quote-src,
+.sage .thanks,
+.sage .closing-names,
+.sage .made {
+  color: #2b4034;
+  opacity: 1;
+  text-shadow: 0 0 10px rgba(255,255,255,.9), 0 0 4px rgba(255,255,255,.8);
+}
+.sage .cal-month { border-color: rgba(43,64,52,.55); }
+.sage .round { border-color: #fff; }
+.sage .sub { color: #2b4034; text-shadow: 0 0 10px rgba(255,255,255,.9), 0 0 4px rgba(255,255,255,.8); }
