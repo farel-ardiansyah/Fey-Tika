@@ -124,11 +124,40 @@
     <!-- Galeri -->
     <section class="sec sage" id="gallery" data-nav="gallery">
       <h2 class="script light">Galeri Kenangan</h2>
-      <div class="gal">
-        <button class="gallery-photo g1" type="button" aria-label="Foto 1">Foto 1</button>
-        <button class="gallery-photo g2" type="button" aria-label="Foto 2">Foto 2</button>
-        <button class="gallery-photo g3" type="button" aria-label="Foto 3">Foto 3</button>
-        <button class="gallery-photo g4" type="button" aria-label="Foto 4">Foto 4</button>
+      <p class="sub gal-sub">Potret perjalanan cinta kami. Ketuk foto untuk memperbesar.</p>
+      <div class="gal" id="galleryGrid">
+        <button class="gallery-photo wide" type="button" data-type="image" data-src="assets/prewed-3.jpeg" aria-label="Buka foto 1">
+          <img src="assets/prewed-3.jpeg" alt="Fey dan Tika berpelukan, foto prewedding" loading="lazy" decoding="async" style="--pos:50% 22%" />
+        </button>
+        <button class="gallery-photo " type="button" data-type="image" data-src="assets/prewed-1.jpeg" aria-label="Buka foto 2">
+          <img src="assets/prewed-1.jpeg" alt="Fey dan Tika dengan bunga putih, foto prewedding" loading="lazy" decoding="async" style="--pos:50% 30%" />
+        </button>
+        <button class="gallery-photo " type="button" data-type="image" data-src="assets/prewed-2.jpeg" aria-label="Buka foto 3">
+          <img src="assets/prewed-2.jpeg" alt="Fey dan Tika berpose anggun, foto prewedding" loading="lazy" decoding="async" style="--pos:50% 25%" />
+        </button>
+        <button class="gallery-photo tall" type="button" data-type="image" data-src="assets/prewed-9.jpeg" aria-label="Buka foto 4">
+          <img src="assets/prewed-9.jpeg" alt="Fey dan Tika di depan dekorasi bunga biru dan putih" loading="lazy" decoding="async" style="--pos:56% 35%" />
+        </button>
+        <button class="gallery-photo sq" type="button" data-type="image" data-src="assets/prewed-5.jpeg" aria-label="Buka foto 5">
+          <img src="assets/prewed-5.jpeg" alt="Miniatur Fey dan Tika di dalam kotak kaca" loading="lazy" decoding="async" style="--pos:50% 38%" />
+        </button>
+        <button class="gallery-photo sq" type="button" data-type="image" data-src="assets/prewed-6.jpeg" aria-label="Buka foto 6">
+          <img src="assets/prewed-6.jpeg" alt="Miniatur pasangan di tangan, bertuliskan My Partner" loading="lazy" decoding="async" style="--pos:50% 62%" />
+        </button>
+        <button class="gallery-photo " type="button" data-type="image" data-src="assets/prewed-7.jpeg" aria-label="Buka foto 7">
+          <img src="assets/prewed-7.jpeg" alt="Potret Fey dengan busana hitam" loading="lazy" decoding="async" style="--pos:50% 20%" />
+        </button>
+        <button class="gallery-photo" type="button" data-type="image" data-src="assets/prewed-8.jpeg" aria-label="Buka foto 8">
+          <img src="assets/prewed-8.jpeg" alt="Potret Tika dengan mahkota emas" loading="lazy" decoding="async" style="--pos:50% 0%" />
+        </button>
+        <button class="gallery-photo " type="button" data-type="image" data-src="assets/prewed-4.jpeg" aria-label="Buka foto 9">
+          <img src="assets/prewed-4.jpeg" alt="Tika dan Fey berpelukan dengan busana adat" loading="lazy" decoding="async" style="--pos:50% 25%" />
+        </button>
+        <button class="gallery-photo is-video" type="button" data-type="video" data-src="assets/prewed-10.mp4" data-poster="assets/prewed-10-poster.jpg" aria-label="Putar video prewedding">
+          <img src="assets/prewed-10-poster.jpg" alt="Cuplikan video prewedding Fey dan Tika" loading="lazy" decoding="async" style="--pos:50% 30%" />
+          <span class="play-badge" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M8 5.5v13a1 1 0 001.5.86l10.5-6.5a1 1 0 000-1.72L9.5 4.64A1 1 0 008 5.5z"/></svg></span>
+          <span class="video-tag" aria-hidden="true">Video</span>
+        </button>
       </div>
     </section>
 
@@ -175,7 +204,7 @@
 
     <!-- Penutup -->
     <section class="sec sage closing" data-nav="rsvp">
-      <div class="round p-oval" aria-hidden="true"></div>
+      <div class="round p-round" role="img" aria-label="Foto Fey dan Tika"></div>
       <p class="thanks">Terima kasih atas doa restu Anda</p>
       <p class="closing-names"><span id="closingFirst">Fey</span> &amp; <span id="closingSecond">Tika</span></p>
       <p class="made">Made with love ♥</p>
@@ -197,8 +226,13 @@
 
   <!-- Lightbox galeri -->
   <div class="lightbox" id="lightbox" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Pratinjau foto">
-    <button class="lightbox-close" id="closeLightbox" type="button" aria-label="Tutup">×</button>
-    <div class="lightbox-content" id="lightboxContent">Foto galeri</div>
+    <div class="lightbox-frame">
+      <button class="lightbox-close" id="closeLightbox" type="button" aria-label="Tutup">×</button>
+      <button class="lightbox-nav prev" id="lightboxPrev" type="button" aria-label="Foto sebelumnya">‹</button>
+      <div class="lightbox-content" id="lightboxContent"></div>
+      <button class="lightbox-nav next" id="lightboxNext" type="button" aria-label="Foto berikutnya">›</button>
+      <div class="lightbox-count" id="lightboxCount" aria-live="polite"></div>
+    </div>
   </div>
 
   <audio id="backgroundMusic" loop preload="none">

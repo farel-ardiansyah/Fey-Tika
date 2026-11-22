@@ -670,84 +670,153 @@ function updateCountdown() {
 
 function setupGallery() {
 
-    const galleryPhotos = document.querySelectorAll(".gallery-photo");
-
+    const tiles = Array.from(document.querySelectorAll(".gallery-photo"));
     const lightbox = document.getElementById("lightbox");
-
-    const lightboxContent = document.getElementById("lightboxContent");
-
+    const stage = document.getElementById("lightboxContent");
+    const counter = document.getElementById("lightboxCount");
     const closeButton = document.getElementById("closeLightbox");
+    const prevButton = document.getElementById("lightboxPrev");
+    const nextButton = document.getElementById("lightboxNext");
+    const music = document.getElementById("backgroundMusic");
+
+    if (!lightbox || !stage || tiles.length === 0) return;
+
+    let current = 0;
+    let resumeMusic = false;
+    let touchStartX = null;
 
 
-    if (!lightbox || !lightboxContent) return;
+    // Musik latar dijeda saat video diputar, lalu dilanjutkan lagi
+    function pauseMusicForVideo() {
+        if (music && !music.paused) {
+            resumeMusic = true;
+            music.pause();
+            updateMusicButton(false);
+        }
+    }
+
+    function restoreMusic() {
+        if (resumeMusic && music) {
+            music.play()
+                .then(() => updateMusicButton(true))
+                .catch(() => {});
+        }
+        resumeMusic = false;
+    }
+
+    function clearStage() {
+        const video = stage.querySelector("video");
+        if (video) {
+            video.pause();
+            video.removeAttribute("src");
+            video.load();
+        }
+        stage.innerHTML = "";
+    }
 
 
-    galleryPhotos.forEach((photo) => {
+    function showItem(index) {
 
-        photo.addEventListener("click", () => {
+        current = (index + tiles.length) % tiles.length;
 
-            const imageBackground = window
-                .getComputedStyle(photo)
-                .backgroundImage;
+        const tile = tiles[current];
+        const type = tile.dataset.type;
+        const source = tile.dataset.src;
 
-            if (
-                !imageBackground ||
-                imageBackground === "none"
-            ) {
-                return;
-            }
+        clearStage();
 
-            lightboxContent.style.backgroundImage = imageBackground;
+        let element;
 
-            lightboxContent.textContent = "";
+        if (type === "video") {
 
-            lightbox.classList.add("open");
+            element = document.createElement("video");
+            element.src = source;
+            element.poster = tile.dataset.poster || "";
+            element.controls = true;
+            element.autoplay = true;
+            element.playsInline = true;
+            element.setAttribute("playsinline", "");
+            element.addEventListener("ended", restoreMusic);
 
-            lightbox.setAttribute("aria-hidden", "false");
+            pauseMusicForVideo();
 
-        });
+        } else {
 
-    });
+            element = document.createElement("img");
+            element.src = source;
+            element.alt = (tile.querySelector("img") || {}).alt || "Foto prewedding";
 
+            restoreMusic();
+        }
+
+        stage.appendChild(element);
+
+        if (counter) {
+            counter.textContent = (current + 1) + " / " + tiles.length;
+        }
+    }
+
+
+    function openGallery(index) {
+
+        showItem(index);
+
+        lightbox.classList.add("open");
+        lightbox.setAttribute("aria-hidden", "false");
+        document.body.style.overflow = "hidden";
+    }
 
     function closeGallery() {
 
+        clearStage();
+        restoreMusic();
+
         lightbox.classList.remove("open");
-
         lightbox.setAttribute("aria-hidden", "true");
-
+        document.body.style.overflow = "";
     }
 
-
-    if (closeButton) {
-
-        closeButton.addEventListener("click", closeGallery);
-
-    }
+    const isOpen = () => lightbox.classList.contains("open");
 
 
-    lightbox.addEventListener("click", (event) => {
-
-        if (event.target === lightbox) {
-
-            closeGallery();
-
-        }
-
+    tiles.forEach((tile, index) => {
+        tile.addEventListener("click", () => openGallery(index));
     });
 
+    if (closeButton) closeButton.addEventListener("click", closeGallery);
+    if (prevButton) prevButton.addEventListener("click", () => showItem(current - 1));
+    if (nextButton) nextButton.addEventListener("click", () => showItem(current + 1));
 
-    document.addEventListener("keydown", (event) => {
-
+    // Klik area gelap di luar foto untuk menutup
+    lightbox.addEventListener("click", (event) => {
         if (
-            event.key === "Escape" &&
-            lightbox.classList.contains("open")
+            event.target === lightbox ||
+            event.target === stage ||
+            event.target.classList.contains("lightbox-frame")
         ) {
-
             closeGallery();
-
         }
+    });
 
+    // Geser kiri/kanan di layar sentuh
+    lightbox.addEventListener("touchstart", (event) => {
+        touchStartX = event.changedTouches[0].clientX;
+    }, { passive: true });
+
+    lightbox.addEventListener("touchend", (event) => {
+        if (touchStartX === null) return;
+        const deltaX = event.changedTouches[0].clientX - touchStartX;
+        touchStartX = null;
+        if (Math.abs(deltaX) < 50) return;
+        showItem(deltaX < 0 ? current + 1 : current - 1);
+    }, { passive: true });
+
+    // Keyboard
+    document.addEventListener("keydown", (event) => {
+        if (!isOpen()) return;
+        if (event.key === "Escape") closeGallery();
+        if (event.key === "ArrowLeft") showItem(current - 1);
+        if (event.key === "ArrowRight") showItem(current + 1);
     });
 
 }
